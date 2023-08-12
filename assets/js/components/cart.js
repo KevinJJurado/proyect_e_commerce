@@ -1,5 +1,5 @@
 function cart (db, printProducts) {
-  // Elementos del DOM
+  // Elementos del DOM 
   const productsDOM = document.querySelector('.products__container')
   const notifyDOM = document.querySelector('.notify')
   const cartDOM = document.querySelector('.cart__body')
@@ -8,17 +8,18 @@ function cart (db, printProducts) {
   const checkoutDOM = document.querySelector('.btn--buy')
 
   let cart = []
-
+  
+  // Funciones 
   function printCart () {
     let htmlCart = ''
-
 
     if (cart.length === 0) {
       htmlCart += `
       <div class="cart__empty">
         <i class="bx bx-cart"></i>
         <p class="cart__empty--text">No hay productos en el carrito</p>
-      </div>`
+      </div>
+      `
       notifyDOM.classList.remove('show--notify')
     } else {
       for (const item of cart) {
@@ -49,7 +50,8 @@ function cart (db, printProducts) {
               <i class='bx bx-trash' ></i>
             </button>
           </div>
-        </article>`
+        </article>
+        `
       }
       notifyDOM.classList.add('show--notify')
     }
@@ -85,13 +87,11 @@ function cart (db, printProducts) {
     printCart()
   }
 
-  
-
-  function deleteFromcart(id) {
+  function deleteFromCart(id) {
     cart = cart.filter(i => i.id !== id)
+
     printCart()
   }
-
 
   function showItemsCount() {
     let suma = 0
@@ -101,12 +101,11 @@ function cart (db, printProducts) {
     return suma
   }
 
-
   function showTotal() {
     let total = 0
     for (const item of cart) {
       const productFinded = db.find(p => p.id === item.id)
-      total += item.qty * productFinded.price
+      total += item.qty * productFinded.price 
     }
     return total
   }
@@ -116,15 +115,16 @@ function cart (db, printProducts) {
       const productFinded = db.find(p => p.id === item.id)
       productFinded.quantity -= item.qty
     }
+
     cart = []
     printCart()
     printProducts()
-    window.alert('Gracias por su compra')
+    window.alert('Gracias por su compra')    
   }
 
   printCart()
 
-  // Eventos
+  // Eventos 
   productsDOM.addEventListener('click', function (e) {
     if (e.target.closest('.add--to--cart')) {
       const id = +e.target.closest('.add--to--cart').dataset.id
@@ -137,18 +137,20 @@ function cart (db, printProducts) {
       const id = +e.target.closest('.article--minus').dataset.id
       removeFromCart(id)
     }
+
     if (e.target.closest('.article--plus')) {
       const id = +e.target.closest('.article--plus').dataset.id
       addToCart(id)
     }
+
     if (e.target.closest('.remove-from-cart')) {
       const id = +e.target.closest('.remove-from-cart').dataset.id
-      deleteFromcart(id)
+      deleteFromCart(id)
     }
-
+    
   })
 
-  checkout.addEventListener('click', function () {
+  checkoutDOM.addEventListener('click', function () {
     checkout()
   })
 }
