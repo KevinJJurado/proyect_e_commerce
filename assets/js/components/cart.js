@@ -6,6 +6,9 @@ function cart (db, printProducts) {
   const countDOM = document.querySelector('.cart__count--item')
   const totalDOM = document.querySelector('.cart__total--item')
   const checkoutDOM = document.querySelector('.btn--buy')
+  const alertDOM = document.querySelector('.alert')
+
+  
 
   let cart = []
   
@@ -119,12 +122,29 @@ function cart (db, printProducts) {
     cart = []
     printCart()
     printProducts()
-    window.alert('Gracias por su compra')    
+    // alertCart()
   }
 
+  function alertCart() {
+
+    checkoutDOM.addEventListener('click', function() {
+      alertDOM.classList.toggle('show--alert')
+    })   
+
+    // close alert
+    alertDOM.addEventListener('click', function (e) {
+      if (e.target.closest('.btn--close--alert')) {
+        alertDOM.classList.remove('show--alert')
+      }
+    })
+  }
+
+  alertCart()
   printCart()
+  
 
   // Eventos 
+
   productsDOM.addEventListener('click', function (e) {
     if (e.target.closest('.add--to--cart')) {
       const id = +e.target.closest('.add--to--cart').dataset.id

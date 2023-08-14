@@ -85,6 +85,7 @@
         <div class="products__container container"></div>
       </section>
     </main>
+    
 
     <!-- Cart  -->
     <div class="cart">
@@ -106,6 +107,79 @@
             <span class="cart__total--item">$0</span>
           </div>
           <button type="button" class="cart__btn btn--buy">Comprar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alert -->
+    <div class="alert">
+      <div class="modal__alert">
+        <div class="alert__container">
+          <div class="alert__header">
+            <button type="button" class="alert__btn btn--close--alert">
+              <i class="bx bx-x"></i>
+            </button>
+          </div>
+          <div class="alert__Thanks">
+            <div class="logo__alert">
+              <!-- <i class='bx bx-like'></i> -->
+              <i class='bx bx-cool'></i>
+              <i class='bx bxs-shopping-bags'></i>
+            </div>
+            <div class="texto__alert">
+              <p class="bold-text">"Gracias por adquirir nuestros productos. Esperamos que tu experiencia con nosotros sea extraordinaria"</p>
+            </div>
+          </div>
+        </div>        
+      </div>
+    </div>
+
+    <!-- Modal_product -->
+    <div class="modal">
+      <div class="modal__container">
+        <div class="modal__product">
+          <div class="modal__image">
+            <!-- <img src="https://res.cloudinary.com/duu1imwxs/image/upload/v1677270465/eCommerce/hoddie1_sxv2ce.png" alt="Hoddie con capucha y cordón ajustable" />
+            <img src="${product.image}" alt="${product.name}" /> -->
+          </div>
+          <div class="modal__details">
+            <div class="modal__close__btn">
+              <button type="button" class="modal__btn__close btn--close--modal">
+                <i class="bx bx-x"></i>
+              </button>
+            </div>
+            <div class="details__head">
+              <!-- <h3 class="modal__title">Hoddie con estampado de marca</h3>
+              <h3 class="modal__title">${product.name}</h3> -->
+            </div>
+            <div class="details__content">
+              <button type="button" class="modal__btn add--to--cart" data-id="${product.id}">
+                <i class="bx bx-cart-add"></i>
+              </button>
+              <!-- <p>Este hoddie presenta un estampado de marca en la parte delantera y está hecho de una mezcla suave de algodón y poliéster. Es ideal para un look casual y moderno.</p> -->
+              <span class="modal__price">Precio:</span>
+              <!-- <span class="price">$15</span>
+              <span class="price">$${product.price}</span> -->
+              <div class="modal__measures">
+                <h3>Medidas</h3>
+                <p>XS, S, M, L, XL, XXL</p>
+              </div>
+
+              <h3>Colores</h3>
+              <div class="modal__colors">
+                <span class="colors__color color--black"></span>
+                <span class="colors__color color--blue"></span>
+                <span class="colors__color color--red"></span>
+                <span class="colors__color color--grey"></span>
+              </div>
+
+              <div class="modal__stock">
+                <!-- <span class="stock">Disponibles: 3</span>
+                <span class="stock">Disponibles: ${product.quantity}</span> -->
+              </div>
+              
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -149,5 +223,6 @@
         </div>
       </div>
     </footer>
+
   </body>
 </html>

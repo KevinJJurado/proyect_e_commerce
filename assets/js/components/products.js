@@ -19,6 +19,9 @@ function products(products) {
             <button type="button" class="product__btn add--to--cart" data-id="${product.id}">
               <i class="bx bx-cart-add"></i>
             </button>
+            <button type="button" class="product__btn2 details__product" data-id="${product.id}">
+              <i class='bx bxs-zoom-in'></i>
+            </button>
             <span class="product__price">$${product.price}</span>
             <span class="product__stock">Disponibles: ${product.quantity}</span>
             <h3 class="product__title">
