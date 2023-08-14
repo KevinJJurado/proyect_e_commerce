@@ -499,6 +499,9 @@ button {
   right: -100%;
   width: 100%;
   height: 100vh;
+  padding: 0 20px;
+  justify-content: center;
+  align-items: center;
   z-index: var(--z-fixed);  
 }
 
@@ -511,7 +514,7 @@ button {
   left: 0;
   width: inherit;
   height: inherit;
-  background-color: rgba(0, 0, 0, .4705882353);
+  background-color: rgba(0, 0, 0, 0.289);
 }
 
 .modal__product {
@@ -520,9 +523,9 @@ button {
   grid-template-columns: repeat(2, 1fr);
   justify-content: center;
   align-items: center;
-  max-width: 900px;
+  max-width: 800px;
   background-color: var(--card-color);
-  padding: var(--sp-0-5);
+  padding: var(--sp-0-75);
   border-radius: var(--sp-1);
 }
 
@@ -530,7 +533,6 @@ button {
   display: grid;
   align-items: center;
   justify-content: center;
-  width: 100%;
   background-color: var(--bg-color);
 }
 
@@ -541,22 +543,20 @@ button {
   width: 100%;
   height: 100%;
   padding: var(--sp-0-5);
+  margin: 0 auto;
 }
 
 .details__head {
-  display: grid;
-  grid-template-columns: 2fr 2fr .5fr;
-  align-items: start;
-  justify-content: end;
-  width: 100%;
   padding: var(--sp-0-5);
 }
 
 .modal__title {
-  grid-column: span 2;
   font-size: var(--medium-font);
 }
 
+.modal__description {
+  font-size: var(--font-normal);
+}
 .modal__close__btn .btn--close--modal {
   font-size: var(--normal-font);
   width: 100%;
@@ -594,8 +594,8 @@ button {
 }
 
 .details__content {
-  display: grid;
-  padding: var(--sp-0-75);
+  /* display: grid;
+  padding: var(--sp-0-75); */
 }
 
 .modal__price {
@@ -610,6 +610,7 @@ button {
 .modal__stock {
   padding: var(--sp-0-5);
   color: lightslategray;
+  justify-self: start;
 }
 
 .modal__btn {
@@ -638,6 +639,52 @@ button {
 .show--modal {
   right: 0;
 }
+
+
+/* Media querys */
+/* @media (max-width: 500px) {
+  .modal__product {
+    grid-template-columns: 1fr; 
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .modal__image {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    background-color: var(--bg-color);
+  }
+  .modal__details {
+    padding: var(--sp-0-75); 
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
+
+  .details__head {
+    grid-template-columns: 1fr; 
+  }
+  
+
+  .details__content {
+    text-align: start;
+  }
+
+  .modal__btn.add--to--cart {
+    margin-top: var(--sp-0-5);
+  }
+  .modal__price,
+  .price {
+    display: block;
+  }
+
+  .modal__measures {
+    margin-top: var(--sp-0-5);
+  }
+} */
 
 /*************Cart*************/
 .cart {

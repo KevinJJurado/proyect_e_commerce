@@ -1,7 +1,5 @@
 function modalProducts(db, printProducts) {
 
-  const btnDetails = document.querySelector('.details__product')
-  // const db = [...products]
   const modal = document.querySelector('.modal')  
   const productsDOM = document.querySelector('.products__container')
   // Cart
@@ -9,6 +7,7 @@ function modalProducts(db, printProducts) {
   const cartDOM = document.querySelector('.cart__body')
   const countDOM = document.querySelector('.cart__count--item')
   const totalDOM = document.querySelector('.cart__total--item')
+  const checkoutDOM = document.querySelector('.btn--buy')
 
   let modalProduct = ""
   productsDOM.addEventListener('click', function (e) {
@@ -36,7 +35,7 @@ function modalProducts(db, printProducts) {
                   <button type="button" class="modal__btn add--to--cart" data-id="${product.id}">
                     <i class="bx bx-cart-add"></i>
                   </button>
-                  <p>${product.description}</p>
+                  <p class="modal__description">${product.description}</p>
                   <span class="modal__price">Precio:</span>
                   <span class="price">$${product.price}</span>
                   <div class="modal__measures">
@@ -141,7 +140,7 @@ function modalProducts(db, printProducts) {
     }
     return suma
   }
-  
+
   function showTotal() {
     let total = 0
     for (const item of cart) {
@@ -150,6 +149,19 @@ function modalProducts(db, printProducts) {
     }
     return total
   }
+
+  function checkout() {
+    for (const item of cart) {
+      const productFinded = db.find(p => p.id === item.id)
+      productFinded.quantity -= item.qty
+    }
+
+    cart = []
+    printCart()
+    printProducts()
+    // alertCart()
+  }
+
 
   // Eventos
 
@@ -166,60 +178,12 @@ function modalProducts(db, printProducts) {
     
   })
 
-  // printProducts()
- 
-  
+  checkoutDOM.addEventListener('click', function () {
+    checkout()
+  })
 
-  
+  // printProducts()
+
 }
 
 export default modalProducts
-
-//   for (const product of db) {
-    //   modalProduct += `
-    //   <div class="modal">
-    //     <div class="modal__container">
-    //       <div class="modal__product">
-    //         <div class="modal__image">
-    //           <img src="${product.image}" alt="${product.name}" />
-    //         </div>
-    //         <div class="modal__details">
-    //           <div class="modal__close__btn">
-    //             <button type="button" class="btn--close--modal">
-    //               <i class="bx bx-x"></i>
-    //             </button>
-    //           </div>
-    //           <div class="details__head">
-    //             <h3 class="modal__title">${product.name}</h3>
-    //           </div>
-    //           <div class="details__content">
-    //             <button type="button" class="modal__btn add--to--cart" data-id="${product.id}">
-    //               <i class="bx bx-cart-add"></i>
-    //             </button>
-    //             <p>${product.description}</p>
-    //             <span class="modal__price">Precio:</span>
-    //             <span class="price">$${product.price}</span>
-    //             <div class="modal__measures">
-    //               <h3>Medidas</h3>
-    //               <p>XS, S, M, L, XL, XXL</p>
-    //             </div>
-
-    //             <h3>Colores</h3>
-    //             <div class="modal__colors">
-    //               <span class="colors__color color--black"></span>
-    //               <span class="colors__color color--blue"></span>
-    //               <span class="colors__color color--red"></span>
-    //               <span class="colors__color color--grey"></span>
-    //             </div>
-
-    //             <div class="modal__stock">
-    //               <span class="stock">Disponibles: ${product.quantity}</span>
-    //             </div>
-                
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>`
-    // }
-    // modal.innerHTML = modalProduct
