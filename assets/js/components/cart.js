@@ -7,6 +7,7 @@ function cart (db, printProducts) {
   const totalDOM = document.querySelector('.cart__total--item')
   const checkoutDOM = document.querySelector('.btn--buy')
   const alertDOM = document.querySelector('.alert')
+  const productStockDOM = document.querySelector('.product__stock')
 
   
 
@@ -66,15 +67,46 @@ function cart (db, printProducts) {
   }
 
   function addToCart(id, qty = 1) {
-    const itemFinded = cart.find(i => i.id === id)
+    const itemFinded = db.find(i => i.id === id)
 
-    if (itemFinded) {
-      itemFinded.qty += qty
-    } else {
-      cart.push({id, qty})
+    if (itemFinded && itemFinded.quantity > 0) {
+      const item = cart.find(i => i.id === id)
+      if (item) {
+        if (checkStock(id, qty + item.qty)) {
+          item.qty++
+        } else {
+          const alert = `
+          <div class="modal__alert">
+            <div class="alert__container">
+              <div class="alert__header">
+                <button type="button" class="alert__btn btn--close--alert">
+                  <i class="bx bx-x"></i>
+                </button>
+              </div>
+              <div class="alert__Thanks">
+                <div class="logo__alert__none">
+                  <i class='bx bxs-x-circle'></i>
+                  <i class='bx bxs-shopping-bags'></i>
+                </div>
+                <div class="text__alert">
+                  <p class="bold-text">"No hay stock disponible"</p>
+                </div>
+              </div>
+            </div>        
+          </div>`
+          alertDOM.innerHTML = alert
+          alertDOM.classList.toggle('show--alert')
+        }
+      } else {
+        cart.push({id, qty})
+      }
     }
-
     printCart()
+  }
+
+  function checkStock(id, qty) {
+    const product = db.find(i => i.id === id)
+    return product.quantity - qty >= 0
   }
 
   function removeFromCart (id, qty = 1) {
@@ -128,7 +160,52 @@ function cart (db, printProducts) {
   function alertCart() {
 
     checkoutDOM.addEventListener('click', function() {
-      alertDOM.classList.toggle('show--alert')
+      if(cart.length !== 0) {
+        const alert = `
+        <div class="modal__alert">
+          <div class="alert__container">
+            <div class="alert__header">
+              <button type="button" class="alert__btn btn--close--alert">
+                <i class="bx bx-x"></i>
+              </button>
+            </div>
+            <div class="alert__Thanks">
+              <div class="logo__alert">
+                <!-- <i class='bx bx-like'></i> -->
+                <i class='bx bx-cool'></i>
+                <i class='bx bxs-shopping-bags'></i>
+              </div>
+              <div class="text__alert">
+                <p class="bold-text">"Gracias por adquirir nuestros productos. Esperamos que tu experiencia con nosotros sea extraordinaria"</p>
+              </div>
+            </div>
+          </div>        
+        </div>`
+        alertDOM.innerHTML = alert
+        alertDOM.classList.toggle('show--alert')
+      } else {
+        const alertNone = `
+        <div class="modal__alert">
+          <div class="alert__container">
+            <div class="alert__header">
+              <button type="button" class="alert__btn btn--close--alert">
+                <i class="bx bx-x"></i>
+              </button>
+            </div>
+            <div class="alert__Thanks">
+              <div class="logo__alert__none">
+                <i class='bx bxs-x-circle'></i>
+                <i class='bx bxs-shopping-bags'></i>
+              </div>
+              <div class="text__alert">
+                <p class="bold-text">"No hay productos en el carrito"</p>
+              </div>
+            </div>
+          </div>        
+        </div>`
+        alertDOM.innerHTML = alertNone
+        alertDOM.classList.toggle('show--alert')
+      }
     })   
 
     // close alert
@@ -149,6 +226,7 @@ function cart (db, printProducts) {
     if (e.target.closest('.add--to--cart')) {
       const id = +e.target.closest('.add--to--cart').dataset.id
       addToCart(id)
+
     }
   })
 

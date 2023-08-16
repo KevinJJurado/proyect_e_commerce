@@ -23,7 +23,7 @@ function products(products) {
               <i class='bx bxs-zoom-in'></i>
             </button>
             <span class="product__price">$${product.price}</span>
-            <span class="product__stock">Disponibles: ${product.quantity}</span>
+            <span class="product__stock" data-id="${product.id}">Disponibles: ${product.quantity}</span>
             <h3 class="product__title">
               ${product.name}
             </h3>

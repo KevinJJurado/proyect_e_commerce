@@ -8,6 +8,7 @@ function modalProducts(db, printProducts) {
   const countDOM = document.querySelector('.cart__count--item')
   const totalDOM = document.querySelector('.cart__total--item')
   const checkoutDOM = document.querySelector('.btn--buy')
+  const alertDOM = document.querySelector('.alert')
 
   let modalProduct = ""
   productsDOM.addEventListener('click', function (e) {
@@ -32,16 +33,12 @@ function modalProducts(db, printProducts) {
                   <h3 class="modal__title">${product.name}</h3>
                 </div>
                 <div class="details__content">
-                  <button type="button" class="modal__btn add--to--cart" data-id="${product.id}">
-                    <i class="bx bx-cart-add"></i>
-                  </button>
+                  
                   <p class="modal__description">${product.description}</p>
-                  <span class="modal__price">Precio:</span>
-                  <span class="price">$${product.price}</span>
-                  <div class="modal__measures">
-                    <h3>Medidas</h3>
-                    <p>XS, S, M, L, XL, XXL</p>
-                  </div>
+                  <span class="modal__price">Precio: $${product.price}</span>
+
+                  <h3>Medidas</h3>
+                  <p>XS, S, M, L, XL, XXL</p>
 
                   <h3>Colores</h3>
                   <div class="modal__colors">
@@ -54,7 +51,9 @@ function modalProducts(db, printProducts) {
                   <div class="modal__stock">
                     <span class="stock">Disponibles: ${product.quantity}</span>
                   </div>
-                  
+                  <button type="button" class="modal__btn add--to--cart" data-id="${product.id}">
+                    <i class="bx bx-cart-add"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -122,15 +121,45 @@ function modalProducts(db, printProducts) {
   }
 
   function addToCart(id, qty = 1) {
-    const itemFinded = cart.find(i => i.id === id)
+    const itemFinded = db.find(i => i.id === id)
 
-    if (itemFinded) {
-      itemFinded.qty += qty
-    } else {
-      cart.push({id, qty})
+    if (itemFinded && itemFinded.quantity > 0) {
+      const item = cart.find(i => i.id === id)
+      if (item) {
+        if (checkStock(id, qty + item.qty)) {
+          item.qty++
+        } else {
+          const alert = `
+          <div class="modal__alert">
+            <div class="alert__container">
+              <div class="alert__header">
+                <button type="button" class="alert__btn btn--close--alert">
+                  <i class="bx bx-x"></i>
+                </button>
+              </div>
+              <div class="alert__Thanks">
+                <div class="logo__alert__none">
+                  <i class='bx bxs-x-circle'></i>
+                  <i class='bx bxs-shopping-bags'></i>
+                </div>
+                <div class="text__alert">
+                  <p class="bold-text">"No hay stock disponible"</p>
+                </div>
+              </div>
+            </div>        
+          </div>`
+          alertDOM.innerHTML = alert
+          alertDOM.classList.toggle('show--alert')
+        }
+      } else {
+        cart.push({id, qty})
+      }
     }
-
     printCart()
+  }
+  function checkStock(id, qty) {
+    const product = db.find(i => i.id === id)
+    return product.quantity - qty >= 0
   }
 
   function showItemsCount() {
@@ -170,6 +199,7 @@ function modalProducts(db, printProducts) {
   modal.addEventListener('click', function(e){
     if (e.target.closest('.btn--close--modal')) {
       modal.classList.remove('show--modal')
+      modalProduct = ""
     }
     if(e.target.closest('.add--to--cart')) {
       const id = +e.target.closest('.add--to--cart').dataset.id
