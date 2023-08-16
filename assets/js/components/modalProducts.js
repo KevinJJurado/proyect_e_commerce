@@ -157,9 +157,29 @@ function modalProducts(db, printProducts) {
     }
     printCart()
   }
+
   function checkStock(id, qty) {
     const product = db.find(i => i.id === id)
     return product.quantity - qty >= 0
+  }
+
+  function removeFromCart (id, qty = 1) {
+    const itemFinded = cart.find(i => i.id === id)
+    const result = itemFinded.qty - qty
+
+    if (result > 0) {
+      itemFinded.qty -= qty
+    } else {
+      cart = cart.filter(i => i.id !== id)
+    }
+    
+    printCart()
+  }
+
+  function deleteFromCart(id) {
+    cart = cart.filter(i => i.id !== id)
+
+    printCart()
   }
 
   function showItemsCount() {
@@ -178,7 +198,7 @@ function modalProducts(db, printProducts) {
     }
     return total
   }
-
+  printCart()
   // Eventos
 
   // const cartFunctions = cart()
@@ -194,8 +214,21 @@ function modalProducts(db, printProducts) {
     }
     
   })
+  
 
   // printProducts()
+  productsDOM.addEventListener('click', function (e) {
+    if (e.target.closest('.add--to--cart')) {
+      const id = +e.target.closest('.add--to--cart').dataset.id
+      addToCart(id)
+
+    }
+  })
+  alertDOM.addEventListener('click', function (e) {
+    if (e.target.closest('.btn--close--alert')) {
+      alertDOM.classList.remove('show--alert')
+    }
+  })
 
 }
 

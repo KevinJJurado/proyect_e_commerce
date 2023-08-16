@@ -73,7 +73,7 @@ function cart (db, printProducts) {
       const item = cart.find(i => i.id === id)
       if (item) {
         if (checkStock(id, qty + item.qty)) {
-          item.qty++
+          item.qty += qty
         } else {
           const alert = `
           <div class="modal__alert">
@@ -208,7 +208,7 @@ function cart (db, printProducts) {
   }
 
   // alertCart()
-  printCart()
+  // printCart()
   
 
   // Eventos 
