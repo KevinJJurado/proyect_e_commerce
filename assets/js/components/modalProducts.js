@@ -179,19 +179,6 @@ function modalProducts(db, printProducts) {
     return total
   }
 
-  function checkout() {
-    for (const item of cart) {
-      const productFinded = db.find(p => p.id === item.id)
-      productFinded.quantity -= item.qty
-    }
-
-    cart = []
-    printCart()
-    printProducts()
-    // alertCart()
-  }
-
-
   // Eventos
 
   // const cartFunctions = cart()
@@ -206,10 +193,6 @@ function modalProducts(db, printProducts) {
       addToCart(id)
     }
     
-  })
-
-  checkoutDOM.addEventListener('click', function () {
-    checkout()
   })
 
   // printProducts()

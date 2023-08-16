@@ -150,16 +150,15 @@ function cart (db, printProducts) {
       const productFinded = db.find(p => p.id === item.id)
       productFinded.quantity -= item.qty
     }
-
+    alertCart()
     cart = []
     printCart()
     printProducts()
-    // alertCart()
+    
   }
 
   function alertCart() {
 
-    checkoutDOM.addEventListener('click', function() {
       if(cart.length !== 0) {
         const alert = `
         <div class="modal__alert">
@@ -206,17 +205,9 @@ function cart (db, printProducts) {
         alertDOM.innerHTML = alertNone
         alertDOM.classList.toggle('show--alert')
       }
-    })   
-
-    // close alert
-    alertDOM.addEventListener('click', function (e) {
-      if (e.target.closest('.btn--close--alert')) {
-        alertDOM.classList.remove('show--alert')
-      }
-    })
   }
 
-  alertCart()
+  // alertCart()
   printCart()
   
 
@@ -250,6 +241,13 @@ function cart (db, printProducts) {
 
   checkoutDOM.addEventListener('click', function () {
     checkout()
+  })
+
+  // close alert
+  alertDOM.addEventListener('click', function (e) {
+    if (e.target.closest('.btn--close--alert')) {
+      alertDOM.classList.remove('show--alert')
+    }
   })
 }
 
